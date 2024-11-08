@@ -15,7 +15,7 @@ ReservationApp est une application Symfony permettant aux utilisateurs de réser
 Clonez le dépôt de l'application :
 
 ```bash
-git clone https://github.com/votre-utilisateur/reservation-app.git
+git clone https://github.com/Pierrecrp1/Symfony_reservation_app
 cd reservation-app
 ```
 
