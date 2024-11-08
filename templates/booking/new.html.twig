@@ -1,0 +1,53 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Réserver un Service{% endblock %}
+
+{% block body %}
+    <div class="max-w-2xl mx-auto mt-12 bg-white shadow-lg rounded-lg p-8">
+        <h1 class="text-3xl font-semibold mb-6">Réserver un Service</h1>
+
+        <label for="booking_date" class="block text-gray-700 font-medium mb-2">Sélectionnez un jour</label>
+        <input type="date" id="booking_date" class="input w-full p-2 border rounded" min="{{ 'now'|date('Y-m-d') }}">
+
+        <h2 class="text-xl font-semibold mt-6">Sélectionnez un créneau horaire</h2>
+        <div id="timeSlots" class="grid grid-cols-4 gap-4 mt-4">
+            <!-- Créneaux horaires générés dynamiquement -->
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('booking_date').addEventListener('change', function () {
+            const date = this.value;
+            const serviceId = {{ service.id }};
+
+            if (!date) return;
+
+            fetch(`/booking/availability?serviceId=${serviceId}&date=${date}`)
+                .then(response => response.json())
+                .then(data => {
+                    const timeSlotsContainer = document.getElementById('timeSlots');
+                    timeSlotsContainer.innerHTML = '';
+
+                    data.timeSlots.forEach(time => {
+                        const timeString = new Date(time.date).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+                        const isUnavailable = data.unavailableSlots.includes(timeString);
+
+                        const button = document.createElement('button');
+                        button.type = 'button';
+                        button.className = `px-4 py-2 rounded ${isUnavailable ? 'bg-gray-400 text-white cursor-not-allowed' : 'bg-emerald-500 text-white hover:bg-emerald-600'}`;
+                        button.textContent = timeString;
+                        button.disabled = isUnavailable;
+                        
+                        if (!isUnavailable) {
+                            button.addEventListener('click', () => {
+                                // Envoi de la réservation
+                                // Code pour gérer la réservation en arrière-plan
+                            });
+                        }
+                        
+                        timeSlotsContainer.appendChild(button);
+                    });
+                });
+        });
+    </script>
+{% endblock %}

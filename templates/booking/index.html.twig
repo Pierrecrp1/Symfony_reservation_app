@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mes Réservations{% endblock %}
+
+{% block body %}
+    <div class="max-w-2xl mx-auto mt-12 bg-white shadow-lg rounded-lg p-8">
+        <h1 class="text-3xl font-semibold mb-6">Mes Réservations</h1>
+
+        {% if bookings is empty %}
+            <p class="text-gray-700">Vous n'avez aucune réservation pour le moment.</p>
+        {% else %}
+            <ul class="space-y-4">
+                {% for booking in bookings %}
+                    <li class="p-4 bg-gray-100 border rounded-lg shadow">
+                        <p><strong>Service :</strong> {{ booking.service.name }}</p>
+                        <p><strong>Date :</strong> {{ booking.date|date('d/m/Y H:i') }}</p>
+                        <p><strong>Status :</strong> {{ booking.status }}</p>
+
+                        <a href="{{ path('booking_detail', { 'id': booking.id }) }}" class="mt-4 inline-block px-4 py-2 bg-emerald-500 text-white rounded hover:bg-emerald-600 transition">Voir Détail</a>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    </div>
+{% endblock %}

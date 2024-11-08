@@ -1,0 +1,28 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Sélectionnez un créneau horaire{% endblock %}
+
+{% block body %}
+    <div class="max-w-md mx-auto mt-12 bg-white shadow-lg rounded-lg p-8">
+        <h1 class="text-3xl font-semibold mb-4">Sélectionnez un créneau horaire</h1>
+        <p class="text-gray-700">Date sélectionnée : {{ date|date('d/m/Y') }}</p>
+
+        <div class="grid grid-cols-4 gap-4 mt-4">
+            {% for time in timeSlots %}
+                {% set timeString = time.format('H:i') %}
+                <form action="{{ path('booking_confirm') }}" method="get" class="inline">
+                    <input type="hidden" name="serviceId" value="{{ service.id }}">
+                    <input type="hidden" name="date" value="{{ date.format('Y-m-d') }} {{ timeString }}">
+
+                    <button type="submit"
+                            class="px-4 py-2 rounded {{ timeString in unavailableSlots ? 'bg-gray-400 text-white cursor-not-allowed' : 'bg-emerald-500 text-white hover:bg-emerald-600' }}"
+                            {% if timeString in unavailableSlots %}disabled{% endif %}>
+                        {{ timeString }}
+                    </button>
+                </form>
+            {% endfor %}
+        </div>
+
+        <a href="{{ path('booking_choose_date', { 'serviceId': service.id }) }}" class="mt-6 inline-block text-emerald-500 hover:underline">Revenir au choix du jour</a>
+    </div>
+{% endblock %}

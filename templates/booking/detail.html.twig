@@ -1,0 +1,29 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Détail de la Réservation{% endblock %}
+
+{% block body %}
+    <div class="max-w-md mx-auto mt-12 bg-white shadow-lg rounded-lg p-8">
+        <h1 class="text-3xl font-semibold mb-4">Détail de la Réservation</h1>
+        
+        <p><strong>Service :</strong> {{ booking.service.name }}</p>
+        <p><strong>Description :</strong> {{ booking.service.description }}</p>
+        <p><strong>Prix :</strong> {{ booking.service.price }} €</p>
+        <p><strong>Durée :</strong> {{ booking.service.duration }} minutes</p>
+        
+        <hr class="my-4">
+
+        <p><strong>Date de Réservation :</strong> {{ booking.date|date('d/m/Y H:i') }}</p>
+        <p><strong>Status :</strong> {{ booking.status }}</p>
+
+        <hr class="my-4">
+
+        <p><strong>Réservé par :</strong> {{ booking.user.name }}</p>
+        <p><strong>Email :</strong> {{ booking.user.email }}</p>
+
+        <div class="mt-6 flex space-x-4">
+            <a href="{{ path('booking_cancel', { 'id': booking.id }) }}" class="inline-block px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600 transition">Annuler la Réservation</a>
+            <a href="{{ path('user_bookings') }}" class="inline-block px-4 py-2 bg-gray-500 text-white rounded hover:bg-gray-600 transition">Retour aux réservations</a>
+        </div>
+    </div>
+{% endblock %}

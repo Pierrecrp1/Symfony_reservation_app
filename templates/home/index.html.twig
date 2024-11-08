@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Bienvenue sur notre site de réservation{% endblock %}
+
+{% block body %}
+    <section class="text-center py-16">
+        <h1 class="text-4xl font-bold mb-4">Bienvenue sur notre application de réservation</h1>
+        <p class="text-lg mb-8">Réservez des services en ligne, gérez votre profil, et découvrez nos offres.</p>
+        <a href="{{ path('service_list') }}" class="px-6 py-3 bg-emerald-500 text-white rounded-lg font-semibold">Voir les services</a>
+    </section>
+{% endblock %}

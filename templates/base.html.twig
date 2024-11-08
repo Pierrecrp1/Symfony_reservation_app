@@ -1,17 +1,30 @@
 <!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text><text y=%221.3em%22 x=%220.2em%22 font-size=%2276%22 fill=%22%23fff%22>sf</text></svg>">
-        {% block stylesheets %}
-        {% endblock %}
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Mon Application{% endblock %}</title>
+    <link rel="stylesheet" href="{{ asset('css/app.css') }}">
+</head>
+<body class="bg-gray-100 text-gray-900 font-sans">
+    <header class="bg-emerald-600 text-white p-4">
+        <nav class="container mx-auto flex justify-between">
+            <a href="{{ path('service_list') }}" class="font-bold mr-4 text-lg">Services</a>
+            <div>
+                <a href="{{ path('user_bookings') }}">Mes réservations</a>
+                <a href="{{ path('user_services') }}" class="ml-4">Mes Services</a>
+                {% if app.user %}
+                    <a href="{{ path('profile_view') }}" class="ml-4">Mon Profil</a>
+                    <a href="{{ path('app_logout') }}" class="ml-4">Déconnexion</a>
+                {% else %}
+                    <a href="{{ path('app_login') }}" class="ml-4">Connexion</a>
+                {% endif %}
+            </div>
+        </nav>
+    </header>
 
-        {% block javascripts %}
-            {% block importmap %}{{ importmap('app') }}{% endblock %}
-        {% endblock %}
-    </head>
-    <body>
+    <main class="container mx-auto py-8">
         {% block body %}{% endblock %}
-    </body>
+    </main>
+</body>
 </html>
